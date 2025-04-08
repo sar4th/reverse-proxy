@@ -1,5 +1,14 @@
 const fetch = require('node-fetch');
 module.exports = async function ({ req, res, log, err }) {
+
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  
+  // Handle preflight OPTIONS request
+  if (req.method === 'OPTIONS') {
+    return res.send('', 204);
+  }
   const path = req.query.path || 'movie/popular';
   const page = req.query.page || '1';
   const TMDB_API_TOKEN =process.env.TMDB_API_TOKEN
