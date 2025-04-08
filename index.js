@@ -13,8 +13,9 @@ module.exports = async function(req, res) {
 		const response = await axios.get(`https://api.themoviedb.org/3/${path}`, {
 			params: { ...query, api_key: TMDB_API_KEY },
 		});
+		return response 
 console.log(response)
 	} catch (err) {
-		console.log(err)
+		return err
 	}
 };
