@@ -1,6 +1,6 @@
-import fetch from 'node-fetch';
+const fetch = require('node-fetch');
 
-export default async ({ req, res }) => {
+module.exports = async function ({ req, res }) {
   const path = req.query.path || 'movie/popular';
   const page = req.query.page || '1';
 
@@ -12,6 +12,7 @@ export default async ({ req, res }) => {
     const data = await response.json();
     return res.json(data);
   } catch (err) {
+    console.error('TMDB error:', err);
     return res.send('TMDB Fetch failed', 500);
   }
 };
