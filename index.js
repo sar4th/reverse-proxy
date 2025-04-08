@@ -9,6 +9,7 @@ module.exports = async function ({ req, res }) {
 
   try {
     const response = await fetch(url);
+    context.log(`Calling TMDB: ${url}`);
     const data = await response.json();
     return res.json(data);
   } catch (err) {
