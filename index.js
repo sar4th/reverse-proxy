@@ -1,9 +1,6 @@
 const fetch = require('node-fetch');
 
 module.exports = async function ({ req, res, log }) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
   // Handle preflight OPTIONS request
   if (req.method === 'OPTIONS') {
@@ -31,9 +28,13 @@ module.exports = async function ({ req, res, log }) {
     log(`Calling TMDB: ${url}`);
     const response = await fetch(url, options);
     const data = await response.json();
-    return res.json(data);
+    return res.json(data,{
+  'Access-Control-Allow-Origin': '*',
+});
   } catch (error) {
     console.error('TMDB error:', error);
-    return res.send('TMDB Fetch failed', 500);
+    return res.send('TMDB Fetch failed', 500,{
+  'Access-Control-Allow-Origin': '*',
+});
   }
 };
