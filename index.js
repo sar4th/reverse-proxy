@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-module.exports = async function ({ req, res }) {
+module.exports = async function ({ req, res ,log,err}) {
   const path = req.query.path || 'movie/popular';
   const page = req.query.page || '1';
 
