@@ -3,7 +3,9 @@ const fetch = require('node-fetch');
 module.exports = async function ({ req, res, log }) {
   // Handle preflight OPTIONS request
   if (req.method === 'OPTIONS') {
-    return res.send('', 204);
+    return res.send('', 204,{
+  'Access-Control-Allow-Origin': '*',
+});
   }
 
   // Extract the 'path' and all other query parameters from the request.
