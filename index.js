@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 module.exports = async function ({ req, res, log, err }) {
   const path = req.query.path || 'movie/popular';
   const page = req.query.page || '1';
-  const TMDB_API_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NGU0MWRiNGVmODI3MjZmZmRkYjU3NTMwOWFmZGVhNCIsIm5iZiI6MTY4MDcwMjE4My45NzQwMDAyLCJzdWIiOiI2NDJkN2FlNzE1OGM4NTAxMjYzYTQxMTUiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.pOhpUGqcXOTBkpW3GzsLGe7z-tgejrm_h9Zjol6LLuk"
+  const TMDB_API_TOKEN =process.env.TMDB_API_TOKEN
   const url = `https://api.themoviedb.org/3/${path}?page=${page}`;
   const options = {
     method: 'GET',
