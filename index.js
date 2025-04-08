@@ -39,7 +39,7 @@ module.exports = async function ({ req, res, log }) {
     // Check if the TMDB response was successful
     if (!response.ok) {
       const errorText = await response.text();
-      log(`TMDB API error: ${response.status} - ${errorText}`);
+      log(`TMDB API error: ${response.status} - ${errorText},with token ${TMDB_API_TOKEN}`);
       return res.json({ error: `TMDB API error: ${response.status}` }, 500, corsHeaders);
     }
     
