@@ -13,7 +13,7 @@ module.exports = async function(req, res) {
 		const response = await axios.get(`https://api.themoviedb.org/3/${path}`, {
 			params: { ...query, api_key: TMDB_API_KEY },
 		});
-		res.json(response.data);
+console.log(response)
 	} catch (err) {
 		res.json(
 			{
