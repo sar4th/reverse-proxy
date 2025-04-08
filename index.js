@@ -15,12 +15,6 @@ module.exports = async function(req, res) {
 		});
 console.log(response)
 	} catch (err) {
-		res.json(
-			{
-				error: "Failed to fetch from TMDB",
-				details: err.message,
-			},
-			500,
-		);
+		console.log(err)
 	}
 };
