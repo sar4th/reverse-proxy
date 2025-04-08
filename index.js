@@ -23,7 +23,12 @@ module.exports = async function ({ req, res, log }) {
       queryParams.append(key, value);
     }
     
-    const TMDB_API_TOKEN = process.env.TMDB_API_TOKEN;
+    // Get your API key (not the JWT token)
+    const TMDB_API_KEY = process.env.TMDB_API_KEY || "84e41db4ef82726ffddb575309afdea4"; // Fallback to the key from your logs
+    
+    // Add API key to query parameters
+    queryParams.append('api_key', TMDB_API_KEY);
+    
     const url = `https://api.themoviedb.org/3/${path}?${queryParams.toString()}`;
     
     log(`Calling TMDB: ${url}`);
@@ -31,15 +36,15 @@ module.exports = async function ({ req, res, log }) {
     const response = await fetch(url, {
       method: 'GET',
       headers: {
-        accept: 'application/json',
-        Authorization: `Bearer ${TMDB_API_TOKEN}`
+        accept: 'application/json'
       }
+      // No Authorization header needed when using api_key
     });
     
     // Check if the TMDB response was successful
     if (!response.ok) {
       const errorText = await response.text();
-      log(`TMDB API error: ${response.status} - ${errorText},with token ${TMDB_API_TOKEN}`);
+      log(`TMDB API error: ${response.status} - ${errorText}`);
       return res.json({ error: `TMDB API error: ${response.status}` }, 500, corsHeaders);
     }
     
