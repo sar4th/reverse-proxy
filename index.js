@@ -9,13 +9,21 @@ module.exports = async function(req, res) {
 	const query = req.query || {};
 	delete query.path;
 
-	try {
-		const response = await axios.get(`https://api.themoviedb.org/3/${path}`, {
-			params: { ...query, api_key: TMDB_API_KEY },
-		});
-		return response 
-console.log(response)
-	} catch (err) {
-		return err
-	}
+	  try {
+    // Call the TMDB endpoint using axios
+    const response = await axios.get(`https://api.themoviedb.org/3/${path}`, {
+      params: { ...query, api_key: TMDB_API_KEY },
+    });
+    // Return the data received from TMDB
+    res.json(response.data);
+  } catch (err) {
+    // In case of error, send a JSON error response
+    res.json(
+      {
+        error: "Failed to fetch from TMDB",
+        details: err.message,
+      },
+      500
+    );
+  }
 };
