@@ -13,8 +13,8 @@ module.exports = async function ({ req, res, log }) {
   }
   
   try {
-    // Get the path parameter
-    const path = req.query.path || 'movie/popular';
+    // Get the path parameter and properly decode it
+    const path = req.query.path ? decodeURIComponent(req.query.path) : 'movie/popular';
     delete req.query.path; // Remove path from query params
     
     // Build the query string from remaining parameters
@@ -23,8 +23,8 @@ module.exports = async function ({ req, res, log }) {
       queryParams.append(key, value);
     }
     
-    // Get your API key (not the JWT token)
-    const TMDB_API_KEY = process.env.TMDB_API_KEY || "84e41db4ef82726ffddb575309afdea4"; // Fallback to the key from your logs
+    // Get your API key
+    const TMDB_API_KEY = process.env.TMDB_API_KEY || "84e41db4ef82726ffddb575309afdea4";
     
     // Add API key to query parameters
     queryParams.append('api_key', TMDB_API_KEY);
@@ -38,7 +38,6 @@ module.exports = async function ({ req, res, log }) {
       headers: {
         accept: 'application/json'
       }
-      // No Authorization header needed when using api_key
     });
     
     // Check if the TMDB response was successful
